@@ -1,5 +1,3 @@
-export default function ProfilePage() {
-    return <div>
-        ProfilePage
-    </div>
+export default function LikePage() {
+    return <div>LikePage</div>
 }

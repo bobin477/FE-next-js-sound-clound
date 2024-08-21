@@ -14,6 +14,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {Container} from "@mui/system";
 import {Avatar} from "@mui/material";
+import Link from "next/link";
+
+import {useRouter} from 'next/navigation'
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -59,7 +62,7 @@ export default function AppHeader() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
-
+    const router = useRouter();
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -91,8 +94,11 @@ export default function AppHeader() {
             transformOrigin={{vertical: 'top', horizontal: 'right'}}
             anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+                <Link style={{color: "unset", textDecoration: "none"}} href={"/profile"}>Profile</Link>
+
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
         </Menu>
     );
 
@@ -146,7 +152,8 @@ export default function AppHeader() {
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{display: {xs: 'none', sm: 'block'}}}
+                            sx={{display: {xs: 'none', sm: 'block'}, cursor: "pointer"}}
+                            onClick={() => router.push('/')}
                         >
                             SoundCloud
                         </Typography>
@@ -164,11 +171,16 @@ export default function AppHeader() {
                             display: {xs: 'none', md: 'flex'},
                             gap: "20px",
                             alignItems: 'center',
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            "> a": {
+                                color: "unset",
+                                textDecoration: "unset",
+                            }
+
                         }}>
-                            <span>Likes</span>
-                            <span>Upload</span>
-                            <span>Playlist</span>
+                            <Link href={"/like"}>Likes</Link>
+                            <Link href={"/upload"}>Upload</Link>
+                            <Link href={"/playlist"}>Playlist</Link>
                             <IconButton
                                 size="large"
                                 edge="end"
