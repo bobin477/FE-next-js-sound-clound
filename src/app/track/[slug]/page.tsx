@@ -1,6 +1,7 @@
 "use client"
 
 import WaveTrack from "@/components/track/waveTrack"
+import { Container } from "@mui/material"
 import { useParams, useSearchParams } from "next/navigation"
 
 function DetailTrack(props: any) {
@@ -9,7 +10,9 @@ function DetailTrack(props: any) {
   console.log(search)
   return (
     <div>
-      <WaveTrack />
+      <Container>
+        <WaveTrack />
+      </Container>
     </div>
   )
 }
