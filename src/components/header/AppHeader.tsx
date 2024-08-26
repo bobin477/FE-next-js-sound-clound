@@ -1,6 +1,6 @@
 "use client"
 import * as React from 'react';
-import {styled, alpha} from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,13 +12,13 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import {Container} from "@mui/system";
-import {Avatar} from "@mui/material";
+import { Container } from "@mui/system";
+import { Avatar, Button } from "@mui/material";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 
-import {useRouter} from 'next/navigation'
-
-const Search = styled('div')(({theme}) => ({
+const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -34,7 +34,7 @@ const Search = styled('div')(({theme}) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({theme}) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -44,7 +44,7 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -59,6 +59,8 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function AppHeader() {
+    const { data: session } = useSession()
+    console.log("check>>>", session)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -91,14 +93,17 @@ export default function AppHeader() {
             keepMounted
             open={isMenuOpen}
             onClose={handleMenuClose}
-            transformOrigin={{vertical: 'top', horizontal: 'right'}}
-            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         >
             <MenuItem onClick={handleMenuClose}>
-                <Link style={{color: "unset", textDecoration: "none"}} href={"/profile"}>Profile</Link>
+                <Link style={{ color: "unset", textDecoration: "none" }} href={"/profile"}>Profile</Link>
 
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={() => {
+                handleMenuClose;
+                signOut()
+            }}>Logout</MenuItem>
         </Menu>
     );
 
@@ -136,7 +141,7 @@ export default function AppHeader() {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle/>
+                    <AccountCircle />
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -144,31 +149,31 @@ export default function AppHeader() {
     );
 
     return (
-        <Box sx={{flexGrow: 1}}>
-            <AppBar position="static" sx={{backgroundColor: "darkred"}}>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static" sx={{ backgroundColor: "darkred" }}>
                 <Container>
                     <Toolbar>
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{display: {xs: 'none', sm: 'block'}, cursor: "pointer"}}
+                            sx={{ display: { xs: 'none', sm: 'block' }, cursor: "pointer" }}
                             onClick={() => router.push('/')}
                         >
                             SoundCloud
                         </Typography>
                         <Search>
                             <SearchIconWrapper>
-                                <SearchIcon/>
+                                <SearchIcon />
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
-                                inputProps={{'aria-label': 'search'}}
+                                inputProps={{ 'aria-label': 'search' }}
                             />
                         </Search>
-                        <Box sx={{flexGrow: 1}}/>
+                        <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{
-                            display: {xs: 'none', md: 'flex'},
+                            display: { xs: 'none', md: 'flex' },
                             gap: "20px",
                             alignItems: 'center',
                             cursor: "pointer",
@@ -178,22 +183,32 @@ export default function AppHeader() {
                             }
 
                         }}>
-                            <Link href={"/like"}>Likes</Link>
-                            <Link href={"/upload"}>Upload</Link>
-                            <Link href={"/playlist"}>Playlist</Link>
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-controls={menuId}
-                                aria-haspopup="true"
-                                onClick={handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <Avatar>H</Avatar>
-                            </IconButton>
+                            {
+                                session ? <><Link href={"/like"}>Likes</Link>
+                                    <Link href={"/upload"}>Upload</Link>
+                                    <Link href={"/playlist"}>Playlist</Link>
+                                    <IconButton
+                                        size="large"
+                                        edge="end"
+                                        aria-label="account of current user"
+                                        aria-controls={menuId}
+                                        aria-haspopup="true"
+                                        onClick={handleProfileMenuOpen}
+                                        color="inherit"
+                                    >
+                                        <Avatar>H</Avatar>
+                                    </IconButton></> : <>
+                                        <Link href={"/like"}>Likes</Link>
+                                        <Link href={"/upload"}>Upload</Link>
+                                        <Link href={"/playlist"}>Playlist</Link>
+                                        <Link href={"#"}>
+                                            <Button variant="contained" onClick={() => signIn()}>Login</Button>
+                                        </Link>
+
+                                    </>
+                            }
                         </Box>
-                        <Box sx={{display: {xs: 'flex', md: 'none'}}}>
+                        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
                                 size="large"
                                 aria-label="show more"
@@ -203,7 +218,7 @@ export default function AppHeader() {
                                 color="inherit"
 
                             >
-                                <MoreIcon/>
+                                <MoreIcon />
                             </IconButton>
                         </Box>
                     </Toolbar>

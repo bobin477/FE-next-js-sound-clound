@@ -7,7 +7,6 @@ import { useParams, useSearchParams } from "next/navigation"
 function DetailTrack(props: any) {
   const searchParam = useSearchParams()
   const search = searchParam.get("audio")
-  console.log(search)
   return (
     <div>
       <Container>

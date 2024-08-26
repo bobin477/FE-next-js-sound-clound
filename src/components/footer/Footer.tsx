@@ -25,7 +25,8 @@ export default function Footer() {
                     flexDirection: "column",
                     alignItems: "start",
                     justifyContent: "center",
-                    minWidth: 100
+                    minWidth: 100,
+
                 }}>
                     <div style={{ color: "#ccc" }}>Eric</div>
                     <div style={{ color: "black" }}>Who am I ?</div>
