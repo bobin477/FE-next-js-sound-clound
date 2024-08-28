@@ -19,7 +19,6 @@ export const authOptions: AuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                // Add logic here to look up the user from the credentials supplied
                 const res = await sendRequest<IBackendRes<JWT>>({
                     url: "http://localhost:8000/api/v1/auth/login",
                     method: "POST",
@@ -32,6 +31,7 @@ export const authOptions: AuthOptions = {
                 if (res && res.data) {
                     return res.data as any
                 } else {
+                    throw new Error(res.message as string)
                     return null
                 }
             }
@@ -82,8 +82,12 @@ export const authOptions: AuthOptions = {
                 session.user = user
             }
             return session
-        }
-    }
+        },
+        
+    },
+    // pages: {
+    //     signIn:"/auth/signin"
+    // }
 }
 
 const handler = NextAuth(authOptions)

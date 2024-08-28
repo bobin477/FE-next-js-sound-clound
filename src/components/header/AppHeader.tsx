@@ -201,8 +201,10 @@ export default function AppHeader() {
                                         <Link href={"/like"}>Likes</Link>
                                         <Link href={"/upload"}>Upload</Link>
                                         <Link href={"/playlist"}>Playlist</Link>
-                                        <Link href={"#"}>
-                                            <Button variant="contained" onClick={() => signIn()}>Login</Button>
+                                        <Link href={"/auth/signin"}>
+                                            <Button variant="contained"
+                                               
+                                            >Login</Button>
                                         </Link>
 
                                     </>
