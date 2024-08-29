@@ -35,10 +35,10 @@ export default function UploadTab() {
     const [value, setValue] = React.useState(0);
     const [trackUpLoad, setTrackUpLoad] = React.useState({
         fileName: "",
-        percent:0
+        percent: 0,
+        uploadTrackName:""
     });
 
-    console.log(trackUpLoad)
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -53,7 +53,7 @@ export default function UploadTab() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <Step1 setValue={setValue} setTrackUpLoad={setTrackUpLoad } />
+                <Step1 setValue={setValue} setTrackUpLoad={setTrackUpLoad} trackUpLoad={trackUpLoad} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <Step2 trackUpLoad={trackUpLoad} />

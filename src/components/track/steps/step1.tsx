@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import "./theme.css"
-import { sendRequest } from '@/utils/api';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
@@ -44,10 +43,11 @@ function InputFileUpload() {
 interface IPops {
     setValue: any
     setTrackUpLoad: any
+    trackUpLoad: any
 }
 
 export default function Step1(props: IPops) {
-    const { setValue, setTrackUpLoad } = props
+    const { setValue, setTrackUpLoad, trackUpLoad } = props
     const { data } = useSession()
     const onDrop = useCallback(async (acceptedFiles: FileWithPath[]) => {
         if (acceptedFiles && acceptedFiles[0]) {
@@ -67,14 +67,22 @@ export default function Step1(props: IPops) {
                     onUploadProgress: progressEvent => {
                         const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total!);
                         setTrackUpLoad({
-                                fileName: acceptedFiles[0].name,
-                                percent: percentCompleted
-                            })
+                            ...trackUpLoad,
+                            fileName: acceptedFiles[0].name,
+                            percent: percentCompleted
+                        })
                     }
                 })
+
+                setTrackUpLoad((prev:any)=>({
+                    ...prev,
+                    uploadTrackName:res.data.data.fileName
+                }))
+
+                
             } catch (error) {
                 //@ts-ignore
-                console.log(error?.response?.data)
+                alert(error?.response?.data)
             }
 
             // const chill = await sendRequest<IBackendRes<ITrackTop[]>>({
