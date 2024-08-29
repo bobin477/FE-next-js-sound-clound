@@ -185,8 +185,8 @@ export default function AppHeader() {
                         }}>
                             {
                                 session ? <><Link href={"/like"}>Likes</Link>
-                                    <Link href={"/upload"}>Upload</Link>
-                                    <Link href={"/playlist"}>Playlist</Link>
+                                    <Link href={"/track/upload"}>Upload</Link>
+                                    <Link href={"/playlisst"}>Playlist</Link>
                                     <IconButton
                                         size="large"
                                         edge="end"
@@ -198,9 +198,7 @@ export default function AppHeader() {
                                     >
                                         <Avatar>H</Avatar>
                                     </IconButton></> : <>
-                                        <Link href={"/like"}>Likes</Link>
-                                        <Link href={"/upload"}>Upload</Link>
-                                        <Link href={"/playlist"}>Playlist</Link>
+                                       
                                         <Link href={"/auth/signin"}>
                                             <Button variant="contained"
                                                

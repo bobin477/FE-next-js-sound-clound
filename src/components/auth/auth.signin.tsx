@@ -33,7 +33,6 @@ const AuthSignIn = (props: any) => {
     const [open, setOpen] = useState<boolean>(false);
     const [resMessage, setResMessage] = useState<string>("")
 
-    console.log("open", open)
     const handleClick = () => {
         setOpen(true);
     };
@@ -75,8 +74,6 @@ const AuthSignIn = (props: any) => {
 
         if (!res?.error) {
             router.push("/")
-            setOpen(true)
-            setResMessage("dang nhap thanh cong")
         } else {
             setOpen(true)
             setResMessage(res.error)
