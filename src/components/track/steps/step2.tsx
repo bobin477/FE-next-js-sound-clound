@@ -139,6 +139,7 @@ export default function Step2(props: IProps) {
   ];
 
   const handleSubmitForm = async () => {
+    console.log(info)
     const res = await sendRequest<IBackendRes<ITrackTop[]>>({
       url: "http://localhost:8000/api/v1/tracks",
       method: "POST",
@@ -150,12 +151,16 @@ export default function Step2(props: IProps) {
         category: info.category
       },
       headers: {
-        'Authorization': `Bearer ${data?.access_token}`,
-        'Content-type': 'application'
+        Authorization: `Bearer ${data?.access_token}`,
       },
      
     })
-    console.log(res)
+    if (res.data) {
+        alert(res.message)
+    } else {
+     alert("loi roi check lai di")
+    }
+   
   }
 
   React.useEffect(() => {
