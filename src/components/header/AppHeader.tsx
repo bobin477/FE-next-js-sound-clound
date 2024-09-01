@@ -17,7 +17,7 @@ import { Avatar, Button } from "@mui/material";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/navigation'
-import { fecthDefaultImage } from '@/utils/api';
+import { fetchDefaultImages } from '@/utils/api';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -198,7 +198,7 @@ export default function AppHeader() {
                                         color="inherit"
                                     >
                                         {/* <Avatar>Hs</Avatar> */}
-                                        <img style={{ width: 35, height: 35 }} src={fecthDefaultImage(session.user.type)} alt="" />
+                                        <img style={{ width: 35, height: 35 }} src={fetchDefaultImages(session.user.type)} alt="" />
                                     </IconButton></>
                                     :
                                     <>

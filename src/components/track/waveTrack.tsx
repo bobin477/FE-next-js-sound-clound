@@ -9,7 +9,8 @@ import './style.scss';
 import { Tooltip } from "@mui/material";
 import { useTrackContext } from "@/app/lib/trackWraper";
 import { useWavesurfer } from "@/utils/customhook";
-import { fecthDefaultImage } from "@/utils/api";
+import { fetchDefaultImages } from "@/utils/api";
+import CommentTrack from "./CommentTrack";
 
 interface IProps {
     track: ITrackTop | null;
@@ -253,7 +254,7 @@ const WaveTrack = (props: IProps) => {
                                                     zIndex: 20,
                                                     left: calLeft(item.moment)
                                                 }}
-                                                src={fecthDefaultImage(item.user.type)}
+                                                src={fetchDefaultImages(item.user.type)}
                                             />
                                         </Tooltip>
                                     )
@@ -286,6 +287,13 @@ const WaveTrack = (props: IProps) => {
                     }
                    
                 </div>
+            </div>
+
+            <div>
+                <CommentTrack
+                    comment={comment}
+                    track={track}
+                />
             </div>
         </div >
     )
