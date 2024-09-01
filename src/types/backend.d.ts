@@ -1,48 +1,27 @@
 export { };
 // https://bobbyhadz.com/blog/typescript-make-types-global#declare-global-types-in-typescript
 
-const a = {
-    _id: '66be272358b1b5f9120f69c2',
-    title: 'Truy Lùng Bảo Vật',
-    description: 'Elvis Presley',
-    category: 'CHILL',
-    imgUrl: 'chill1.png',
-    trackUrl: 'CHILL.mp3',
-    countLike: 620,
-    countPlay: 808,
-    uploader: {
-        _id: "66be272358b1b5f9120f69bc",
-        email: "admin@gmail.com",
-        name: "I'm admin",
-        role: "ADMIN",
-        type: "SYSTEM"
-    },
-    isDeleted: false,
-    __v: 0,
-    createdAt: '2024-08-15T16:04:51.800Z',
-    updatedAt: '2024-08-15T16:04:51.800Z'
-}
 declare global {
+
     interface ITrackTop {
-        _id: string;
-        title: string;
-        description: string;
-        category: string;
-        imgUrl: string;
-        trackUrl: string;
-        countLike: number;
-        countPlay: number;
-        uploader: {
-            _id: string;
-            email: string;
-            name: string;
-            role: string;
-            type: string;
-        };
-        isDeleted: boolean;
-        __v: number;
-        createdAt: string;
-        updatedAt: string;
+        "_id": string;
+        "title": string;
+        "description": string;
+        "category": string;
+        "imgUrl": string;
+        "trackUrl": string;
+        "countLike": number;
+        "countPlay": number;
+        "uploader": {
+            "_id": string;
+            "email": string;
+            "name": string;
+            "role": string;
+            "type": string;
+        },
+        "isDeleted": boolean;
+        "createdAt": string;
+        "updatedAt": string;
     }
 
     interface IRequest {
@@ -72,4 +51,33 @@ declare global {
         result: T[]
     }
 
+    interface IShareTrack extends ITrackTop {
+        isPlaying: boolean;
+    }
+
+    interface ITrackContext {
+        currentTrack: IShareTrack;
+        setCurrentTrack: (v: IShareTrack) => void;
+    }
+
+    interface ITrackComment {
+        "_id": string;
+        "content": string;
+        "moment": number;
+        "user": {
+            "_id": string;
+            "email": string;
+            "name": string;
+            "role": string;
+            "type": string;
+        },
+        "track": string;
+        "isDeleted": boolean;
+
+        "createdAt": string;
+        "updatedAt": string;
+    }
+
+
 }
+

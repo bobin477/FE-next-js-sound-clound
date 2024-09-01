@@ -48,15 +48,15 @@ export default function UploadTab() {
         <Box sx={{ width: '100%', border: "1px solid #ccc", marginTop: 5, borderRadius: 3 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="TRACK" />
-                    <Tab label=" BASIC INFORMATION" />
+                    <Tab label="TRACK" disabled={value !== 0 } />
+                    <Tab label=" BASIC INFORMATION" disabled={value !== 1} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
                 <Step1 setValue={setValue} setTrackUpLoad={setTrackUpLoad} trackUpLoad={trackUpLoad} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <Step2 trackUpLoad={trackUpLoad} />
+                <Step2 trackUpLoad={trackUpLoad} setValue={setValue } />
             </CustomTabPanel>
           
         </Box>

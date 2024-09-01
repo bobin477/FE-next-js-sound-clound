@@ -17,6 +17,7 @@ import { Avatar, Button } from "@mui/material";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/navigation'
+import { fecthDefaultImage } from '@/utils/api';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -97,7 +98,7 @@ export default function AppHeader() {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         >
             <MenuItem onClick={handleMenuClose}>
-                <Link style={{ color: "unset", textDecoration: "none" }} href={"/profile"}>Profile</Link>
+                <Link style={{ color: "unset", textDecoration: "none" }} href={`/profile/${session?.user._id}`}>Profile</Link>
 
             </MenuItem>
             <MenuItem onClick={() => {
@@ -186,7 +187,7 @@ export default function AppHeader() {
                             {
                                 session ? <><Link href={"/like"}>Likes</Link>
                                     <Link href={"/track/upload"}>Upload</Link>
-                                    <Link href={"/playlisst"}>Playlist</Link>
+                                    <Link href={"/playlist"}>Playlist</Link>
                                     <IconButton
                                         size="large"
                                         edge="end"
@@ -196,12 +197,15 @@ export default function AppHeader() {
                                         onClick={handleProfileMenuOpen}
                                         color="inherit"
                                     >
-                                        <Avatar>H</Avatar>
-                                    </IconButton></> : <>
-                                       
+                                        {/* <Avatar>Hs</Avatar> */}
+                                        <img style={{ width: 35, height: 35 }} src={fecthDefaultImage(session.user.type)} alt="" />
+                                    </IconButton></>
+                                    :
+                                    <>
+
                                         <Link href={"/auth/signin"}>
                                             <Button variant="contained"
-                                               
+
                                             >Login</Button>
                                         </Link>
 

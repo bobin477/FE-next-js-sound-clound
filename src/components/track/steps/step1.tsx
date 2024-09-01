@@ -23,6 +23,7 @@ const VisuallyHiddenInput = styled('input')({
 function InputFileUpload() {
     return (
         <Button
+
             component="label"
             role={undefined}
             variant="contained"
@@ -84,14 +85,6 @@ export default function Step1(props: IPops) {
                 //@ts-ignore
                 alert(error?.response?.data)
             }
-
-            // const chill = await sendRequest<IBackendRes<ITrackTop[]>>({
-            //     url: "http://localhost:8000/api/v1/files/upload",
-            //     method: "DELETE",
-            //     headers: {
-            //         "Authorization": `Bearer ${data}`,
-            // }             
-            // })
         }
     }, [data])
 

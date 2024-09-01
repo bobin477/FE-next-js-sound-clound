@@ -13,10 +13,12 @@ import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useSession } from 'next-auth/react'
 import { sendRequest } from '@/utils/api';
+import { useToast } from '@/utils/toast/useToast';
 
 
 interface IProps {
   trackUpLoad: any
+  setValue: (v: number) => void
 }
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
@@ -111,7 +113,8 @@ interface INewTrack {
 
 export default function Step2(props: IProps) {
   const { data } = useSession()
-  const { trackUpLoad } = props
+  const toast = useToast()
+  const { trackUpLoad, setValue } = props
   const [info, setInfo] = React.useState<INewTrack>(
     {
       title: '',
@@ -139,7 +142,6 @@ export default function Step2(props: IProps) {
   ];
 
   const handleSubmitForm = async () => {
-    console.log(info)
     const res = await sendRequest<IBackendRes<ITrackTop[]>>({
       url: "http://localhost:8000/api/v1/tracks",
       method: "POST",
@@ -153,14 +155,16 @@ export default function Step2(props: IProps) {
       headers: {
         Authorization: `Bearer ${data?.access_token}`,
       },
-     
+
     })
+    console.log(res)
     if (res.data) {
-        alert(res.message)
+      setValue(0)
+      await toast.success(res.message)
     } else {
-     alert("loi roi check lai di")
+      await toast.error(res.message)
     }
-   
+
   }
 
   React.useEffect(() => {
@@ -178,7 +182,7 @@ export default function Step2(props: IProps) {
       <div>
         {trackUpLoad.fileName}
       </div>
-      <LinearWithValueLabel trackUpLoad={trackUpLoad} />
+      <LinearWithValueLabel trackUpLoad={trackUpLoad} setValue={setValue} />
     </div>
 
       <Grid container spacing={2} mt={5}>
